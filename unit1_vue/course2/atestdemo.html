@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue基础-todolist</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id='todoapp'>
+        <div class="header">
+          <h1>Test笔记</h1>
+          <input type="text" placeholder="请输入任务" v-model.trim="task" @keyup.enter="add(task)">
+        </div>
+        <div class="main">
+          <ul class="todo-list">
+            <li class="todo" v-for="item in todo_list">{{item}}</li>
+          </ul>
+        </div>
+        <div class="footer" v-show="todo_list.length!=0"> <!-- v-show不销毁元素，只是display: none; 隐藏元素 -->
+          <span class="todo-count">{{todo_list.length}} tasks left</span>
+          <button class="clear-completed" @click="empty">清空</button>
+        </div>
+    </div>
+    
+    <script>
+          // 创建vue对象
+          const app=Vue.createApp({
+              data(){
+                  todo_list=['python','java','go','js'];
+                  task='';
+                  return{
+                      todo_list,task
+                  }
+              },
+              methods:{
+                  add(todo){
+                      // 当输入不为空时才去插数据
+                      if (todo!=''){
+                          this.todo_list.unshift(todo); // 从头部插入数据
+                          this.task='';
+                      }
+                  },
+                  empty(){
+                      this.todo_list=[]; // 清空任务列表
+                  }
+              }
+          });
+          // 挂载前端-会返回实例对象
+          const vm=app.mount("#todoapp")
+    </script>
+</body>
+</html>

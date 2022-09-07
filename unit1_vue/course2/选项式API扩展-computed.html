@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选项式API扩展-computed</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 处理复杂数据时，之前是使用插值语法 -->
+        <!-- <h3>{{eat?'吃过了':'没吃呢'}}</h3>   -->
+        <h3>{{eatfunc}}</h3>
+        <button @click="eat=!eat">吃饭/消化</button>
+        <br/>
+        <button @click="now">当前时间方法</button>
+        <button @click="now2">当前时间计算</button>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+                eat=false;
+                return {
+                    eat
+                }
+            },
+            methods:{
+                now(){
+                    console.log("方法",Date.now())
+                }
+            },
+            // computed与methods的区别
+            // computed会缓存结果，前提是操作的对象里的data的数据没有发生改变
+            // methods会立即执行，实时更新结果，不会缓存
+            computed:{ // 计算属性--用于简化模板逻辑
+                eatfunc(){ // 定义方法--模板里面当属性使用就行
+                    return this.eat?'吃过了':'没吃呢'
+                },
+                now2(){
+                    console.log("计算",Date.now())
+                }
+            }
+        });
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

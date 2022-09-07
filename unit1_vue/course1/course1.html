@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>course1-vue基础</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head> 
+<body>
+    <!-- MVVM模式中的V view视图模板 -->
+    <div id="root">
+        <!-- 1- v-bind单项数据绑定：从js到html v-bind简写是冒号  
+            v-model双向数据绑定：后端js可以传数据给前端html，前端可以修改数据给后端 
+            数据绑定接收的参数是变量/js常量/js表达式
+        -->
+
+        <!-- 2- 修饰符 v-model.lazy  表示数据在“change”时而非“input”时更新 
+            v-model.number  将用户的输入值转为数值类型
+            v-model.trim  自动过滤用户输入的首尾空白字符
+        -->
+        <a v-bind:href="link">点我跳转到百度</a>
+        <br/>
+        <input type="text" v-model.lazy='age'>输入的年龄为：{{age}}
+        <br/>
+
+        <!-- 3- v-on事件监听 简写@ 触发时间时执行js函数 -->
+        <button v-on:click="sayHi(10,$event)">点击事件</button>
+        <br/>
+        <button @click="counter += 1">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+        <br/>
+        <input type="text" placeholder="请输入第一个值" v-model.number="value1">
+        <input type="text" placeholder="请输入第二个值" v-model.number="value2">
+        <button @click="add">计算</button>
+        <p>结果为：{{res}}</p>
+        <br/>
+
+        <!-- 4- v-if v-else 条件渲染-控制元素生成和销毁 v-if后面紧跟v-else可以实现分支效果 -->
+        <h3 v-if='eat'>吃饭了</h3>
+        <h3 v-else>没吃</h3>
+        <button @click="eat=!eat">开饭/消化</button>
+
+        <!-- 5- v-show 用法与v-if相同，区别是v-show不会销毁元素，只是把元素的display改成none从而不显示，相比较v-if
+        性能开销小，再元素频繁切换时建议使用v-show -->
+    </div>
+    
+    <script>
+        // 创建vue3对象， MVVM模式中的VM：vue实例对象
+        const app=Vue.createApp({
+            //data： MVVM模式中的M model数据模型
+            data(){  //data函数返回模板要用到的变量
+                name='hello';
+                age=18;
+                link='http://www.baidu.com';
+                counter=0;
+                value1='';
+                value2='';
+                res='';                
+                eat=false;
+                return{
+                    name,age,link,counter,value1,value2,res,eat
+                }
+            },
+            methods:{  //methods定义模板方法，event是事件形参，用来获取调用这个方法的事件，data定义的数据会绑定到this
+                // 如果没有其他形参，只有event，则上面调用函数时不用传任何参数(默认传)，如果有其他形参，则调用时要传$event
+                sayHi(num,event){
+                    alert(this.name);
+                    alert(event.target.tagName);
+                    alert(this.age+num);
+                },
+                add(){
+                    this.res=this.value1+this.value2
+                }
+            }
+        })
+        // 挂载：会返回vue实例对象
+        app.mount('#root')
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件深入-vue生命周期</title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+            }
+        });
+
+        const alertBox={
+            // 生命周期钩子
+            beforeCreate(){   // 创建组件之前
+                console.log('beforeCreated')
+            },
+            created(){  // 创建组件
+                console.log('created')
+            },
+            beforeMount(){  // 挂载组件之前
+                console.log('beforeMount')
+            },
+            mounted(){  // 挂载组件
+                console.log('mounted')
+            },
+            beforeUnmount(){  // 销毁组件之前
+                console.log('beforeUnmount')
+            },
+            unmounted(){  // 销毁组件
+                console.log('unmounted')
+            },
+            beforeUpdate(){  // 更新组件可以通过更新数据查看,点击更新链接或更新背景都会触发DOM的重新渲染从而触发updated和beforeupdate两个生命周期钩子。
+                console.log('beforeUpdate')
+            },
+            updated(){
+                console.log('update')
+            },
+            template:`
+            <div>
+                <slot></slot>  
+            </div>
+            `
+        };
+
+
+        // 注册组件
+        app.component('alertBox',alertBox);
+
+        // 挂载-放在最后，返回vue实例
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>

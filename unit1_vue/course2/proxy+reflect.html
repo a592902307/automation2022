@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue响应式原理-proxy+reflect</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <script>
+        // 1- Proxy 是ES6引入的API，作用是在目标对象之前拦截一次代理，可以通过操作代理实现操作对象
+        // 2- Reflect-反射 动态设置对象属性
+        const obj={addr:"杭州西湖"}
+        // 创建代理--obj
+        const p=new Proxy(obj,{
+            get:function(target,key){ // 目标对象(就是obj)，属性
+                console.log("拦截get操作--vue这里做了更复杂的事情");
+                // return obj.key // 传入的key是个字符串不能这样调用
+                // return obj[key];
+                return Reflect.get(target,key) // 反射的方式取值
+            },
+            set:function(target,key,value){
+                console.log("拦截set操作--vue这里做了更复杂的事情")
+                // document.getElementById('demo').innerText=value // 底层原理，通过操作dom对象
+                // obj.key=value
+                return Reflect.set(target,key,value) // 反射的方式设置值
+            }
+        });
+        console.log(p); // Proxy {addr: '杭州西湖'}
+        console.log(p.addr);
+        console.log(p.age="18");
+    </script>
+</body>
+</html>

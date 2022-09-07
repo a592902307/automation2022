@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件深入-组件监听事件$emit方法</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id='newtodolist'>
+        <div class="header">
+          <h1>Test笔记</h1>
+          <input type="text" placeholder="请输入任务" v-model.trim="task" @keyup.enter="add(task)">
+        </div>
+        
+        <div class="main">
+          <ul class="todolist">
+            <!-- <todo v-for="todoone in todo_list" :item="todoone"></todo> -->
+
+            <!-- 第一种：子组件使用父组件的方法，可以把方法当做数据去传个子组件 -->
+            <!-- <todoli v-for="(todoone,indexone) in todo_list" :item="todoone" :index="indexone" :remove="remove"></todoli> -->
+            <!-- 第二种：监听子组件事件 用$emit方法 父组件中 @自定义事件="表达式或方法" 子组件中 @click="$emit('自定义事件')" -->
+            <todoli2 v-for="(todoone,indexone) in todo_list" :item="todoone" :index="indexone" @remove-target="remove()"></todoli2>
+          </ul>
+        </div>
+        
+        <div class="footer" v-show="todo_list.length!=0"> <!-- v-show不销毁元素，只是display: none; 隐藏元素 -->
+          <span class="todo-count">{{todo_list.length}} tasks left</span>
+          <button class="clear-completed" @click="empty">清空</button>
+        </div>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+                const todo_list=['python','java','go','js'];
+                const task='';
+                return{
+                    todo_list,task
+                }
+            },
+            methods:{
+                add(todo){
+                    // 当输入不为空时才去插数据
+                    if (todo!=''){
+                        this.todo_list.unshift(todo); // 从头部插入数据
+                        this.task='';
+                    }
+                },
+                empty(){
+                    this.todo_list=[]; // 清空任务列表
+                },
+                remove(index){
+                    this.todo_list.splice(index,1)
+                }
+            }
+        });
+
+        // 定义组件
+        const todo={
+            props:['item'], 
+            template:`<li class="todo">{{item}}</li>`
+        };
+        // 添加勾选功能，移除当前任务功能组件
+        const todoli={
+            // 组件入参升级版，限定入参类型，要以对象形式
+            props:{item:{type:String,default:''},index:{type:Number,default:NaN},remove:{type:Function,default:null}},
+            template:`
+                <li class="todo">   
+                    <div class="view">
+                        <input type="checkbox" :id="index" :vlaue="item">
+                        <span class="index">{{index+1}}.</span>
+                        <label :for="index">{{item}}</label>
+                        <button class="destory" @click="remove(index)">删除</button>
+                    <div/>  
+                </li>
+            `
+        };
+        const todoli2={
+            // 组件入参升级版，限定入参类型，要以对象形式
+            props:{item:{type:String,default:''},index:{type:Number,default:NaN}},
+            template:`
+                <li class="todo">   
+                    <div class="view">
+                        <input type="checkbox" :id="index" :vlaue="item">
+                        <span class="index">{{index+1}}.</span>
+                        <label :for="index">{{item}}</label>
+                        <button class="destory" @click="$emit('removeTarget',index)">删除</button>
+                    <div/>  
+                </li>
+            `
+        };
+    
+
+
+        // 注册组件
+        app.component('todo',todo);
+        app.component('todoli',todoli);
+        app.component('todoli2',todoli2);
+
+        // 挂载-放在最后，返回vue实例
+        const vm=app.mount('#newtodolist');
+        
+    </script>
+</body>
+</html>

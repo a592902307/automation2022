@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选项式API扩展-watch</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id="root">
+        <div>
+            <input type="text" placeholder="请输入用户名" v-model="username">
+            <span>{{res}}</span>
+        </div>
+        
+        <input type="password" placeholder="请输入密码" v-model="psw">
+        <br/>
+        <input type="password" placeholder="请再次输入密码" v-model="repeatpsw">
+        <span>{{pswres}}</span>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+                username='';
+                res='';
+                psw='';
+                repeatpsw='';
+                pswres='';
+                return {
+                    username,res,psw,repeatpsw
+                }
+            },
+            watch:{
+                // 监听username数据的变化
+                // 监听变量名（new变量名，old变量名）
+                username(newName,oldName){
+                    console.log('监听变化')
+                    if (newName.length<5){
+                        this.res="用户名不能小于5位";
+                    }
+                    else{
+                        this.res='';
+                    }
+                },
+                repeatpsw(newPsw,oldPsw){
+                    if (newPsw!=this.psw){
+                        this.pswres="两次密码输入不一致";
+                    }
+                    else{
+                        this.pswres="";
+                    }
+                }
+            }
+        });
+        const vm=app.mount('#root')
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件深入-组件上使用vmodel</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id="root">
+        <search-input v-model="kwargs"></search-input>
+        <br/>
+        <!-- 下面两种效果相同 v-bind单项数据绑定：从js拿数据到html  @input表示当input事件发生时会把value传给ddemo -->
+        <input type="text" v-model="ddemo">
+        <!-- <input type="text" :value="ddemo" @input="ddemo=$event.target.value"> -->
+
+        <h3>你输入的内容是:{{kwargs}}</h3>
+        <h3>你输入的内容是:{{ddemo}}</h3>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+                const kwargs='';
+                const ddemo='';
+                return{
+                    kwargs,ddemo
+                }
+            }
+        });
+
+        // 组件的v-model使用
+        const searchInput={
+            props:['modelValue'], // 给组件传递数据
+            emits:['update:modelValue'], // 给组件传递事件
+            template: // 给组件提供模板
+            `  
+            <input type="text" placeholder="请输入搜索关键字"
+            :value="modelValue"
+            @input="$emit('update:modelValue',$event.target.value)"
+            >
+            `
+        };
+
+
+
+
+
+        // 注册组件
+        app.component('searchInput',searchInput);
+
+        // 挂载-放在最后，返回vue实例
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>

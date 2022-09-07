@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件基础</title>
+    <script src="https://unpkg.com/vue@3.2.6"></script>
+</head>
+<body>
+    <div id="root">
+        <ul>
+            <!-- 父组件通过v-bind来动态传递数据。例如把item.title传递给子组件中的title -->
+            <!-- 在html标签中是不区分大小写的，如果组件名是驼峰式的，这里就要变为blog-post -->
+            <blog-post v-for="item in posts" :title="item.title" :id="item.id"></blog-post>
+        </ul>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return{
+                    posts:[
+                    { id: 1, title: '红楼梦' },
+                    { id: 2, title: '三国演义' },
+                    { id: 3, title: '西游记' },
+                    { id: 4, title: '水浒传' },
+                    ]
+                }
+            }
+        });
+
+        // 定义组件
+        // 组件里不要有循环，放到外面
+        const blog={
+            props:['title','id'], // 接收父组件数据传输，组件入参
+            computed:{
+                link(){
+                    return `/post/${this.id}`
+                }
+            },
+            template:`<li><a :href="link">{{title}}</a></li>`, // 组件模板
+        };
+        // 注册组件
+        app.component('blogPost',blog);
+
+        // 挂载
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>

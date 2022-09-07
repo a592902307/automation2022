@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件深入-slot插槽</title>
+</head>
+<body>
+    <div id="root">
+        <alert-box>
+            <h1>报错了！</h1>
+            <h1 style="background-color: red;">报错了！</h1>
+            <h1>报错了！</h1>
+        </alert-box>
+    </div>
+
+    <script>
+        const app=Vue.createApp({
+            data(){
+            }
+        });
+
+        const alertBox={
+            // slot></slot>  插槽，可以植入html元素片段
+            template:
+            `  
+            <div class="demo-alert-box">
+                <strong>Error!</strong>
+                <slot></slot>
+            </div>
+            `
+        };
+
+
+
+
+
+        // 注册组件
+        app.component('alertBox',alertBox);
+
+        // 挂载-放在最后，返回vue实例
+        const vm=app.mount('#root');
+    </script>
+</body>
+</html>
