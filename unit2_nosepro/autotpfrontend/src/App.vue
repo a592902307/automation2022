@@ -1,4 +1,5 @@
 <template>
+  <Background></Background>
   <nav>
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
@@ -6,6 +7,15 @@
   </nav>
   <router-view/>
 </template>
+
+<script>
+    import Background from './components/Background.vue'
+    export default ({
+        components:{
+            Background
+        },
+      });
+</script>
 
 <style lang="scss">
 #app {
