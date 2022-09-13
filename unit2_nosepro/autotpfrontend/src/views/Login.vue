@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <Background></Background> -->
+        <Background></Background>
         <div class="title">测试平台</div>
         <div class="login-form">
             <!-- 表单最外层用el-form来包裹 -->
@@ -25,12 +25,11 @@
 
 <script>
     import {ref,reactive} from "vue"
-    // import Background from '../components/Background.vue'
+    import Background from '../components/Background.vue'
     export default ({
-        // components:{
-        //     Background
-        // },
-        name:"Login",
+        components:{
+            Background
+        },
 
         setup() {
             const loginForm=ref(null)
@@ -98,9 +97,10 @@
       align-items: center;
       font-size: 33px;
       font-weight:300;
-      font-family: Avenir,"Helvetica Neue",Arial,Helvetica,sans-serif;
+      font-family: "Microsoft Yahei";
       color: rgb(13, 104, 139);
     }
+    
     .el-form-item {
       color: black;
     }
