@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <Background></Background>
+    <Background></Background>
+    <div class="lf">
+        <!-- <Background></Background> -->
         <div class="title">测试平台</div>
         <div class="login-form">
             <!-- 表单最外层用el-form来包裹 -->
@@ -104,4 +105,5 @@
     .el-form-item {
       color: black;
     }
+
 </style>
