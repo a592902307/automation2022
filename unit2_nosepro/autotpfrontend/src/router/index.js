@@ -28,4 +28,23 @@ const router = createRouter({
   routes
 })
 
+// 全局前置路由守卫
+router.beforeEach((to,from,next)=>{
+  // 控制要访问的路由，如果访问的不是login且没有登录，就重定向到login
+  if (to.name !== 'login' && localStorage.getItem('islogin') !== 'yes'){
+    console.log('未登录')
+    // return '/about' // 重定向到'/about'，跳到about页面会再次触发路由守卫
+    next({name:'login'})
+  }
+  else{
+    if(to.name !== 'login'){
+      console.log('已登录')
+    }else{
+      console.log('未登录')
+    }
+    // next() 表示放行，会继续访问to指向的路径，但是仍然会触发全局守卫
+    next()
+  }
+})
+
 export default router
