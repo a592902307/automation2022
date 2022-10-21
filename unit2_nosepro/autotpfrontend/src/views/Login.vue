@@ -4,6 +4,7 @@
         <div class="title">测试平台</div>
         <div class="login-form">
             <!-- 表单最外层用el-form来包裹 ref绑定元素可以让后端操作dom元素 -->
+            <!-- :model 绑定表单数据对象 -->
             <el-form :model="form" label-width="60px" :rules="rules" validate-on-rule-change ref="loginForm">
                 <div class="text-header">登录</div>
                 <!-- el-form需要嵌套el-form-item -->

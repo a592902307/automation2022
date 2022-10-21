@@ -4,9 +4,43 @@ import Login from '../views/Login.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/', //一级路由
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    children:[ //子路由，这里的路由组件会显示到当前父组件的router-view中，开头不需要加/
+      {
+        path:'cases',
+        component: ()=>import("../pages/Cases.vue"),
+        meta:{ //存放自定义标签
+          title:'测试用例',
+          icon:'Location'
+        }
+      },
+      {
+        path:'requests',
+        component: ()=>import("../pages/Request.vue"),
+        meta:{
+          title:'web接口',
+          icon:'Clock'
+        }
+      },
+      {
+        path:'plans',
+        component: ()=>import("../pages/Plans.vue"),
+        meta:{
+          title:'测试计划',
+          icon:'Document'
+        }
+      },
+      {
+        path:'reports',
+        component: ()=>import("../pages/Reports.vue"),
+        meta:{
+          title:'测试报告',
+          icon:'Notebook'
+        }
+      }
+    ]
   },
   {
     path: '/about',
@@ -37,7 +71,7 @@ router.beforeEach((to,from,next)=>{
     next({name:'login'})
   }
   else{
-    if(to.name !== 'login'){
+    if(to.name != 'login'){
       console.log('已登录')
     }else{
       console.log('未登录')
