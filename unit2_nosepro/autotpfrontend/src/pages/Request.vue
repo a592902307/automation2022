@@ -1,5 +1,12 @@
 <template>
-  <div>
-    web接口
-  </div>
+  <MainLayout></MainLayout>
 </template>
+
+<script>
+  import MainLayout from '../components/common/MainLayout.vue';
+  export default {
+    components:{
+      MainLayout,
+    }
+  }
+</script>

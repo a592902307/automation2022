@@ -56,7 +56,7 @@
 <script>
     import {ref} from 'vue';
     import { useRouter } from 'vue-router';
-    import SidebarItem from './common/sidebaritem.vue';
+    import SidebarItem from './common/SidebarItem.vue';
     export default{
     // eslint-disable-next-line vue/multi-word-component-names
         name: "Sidebar",

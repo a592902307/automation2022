@@ -9,6 +9,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue' // 引入element 
 const app=createApp(App);
 app.use(store).use(router)
 app.use(ElementPlus)
+// 对所有图标进行注册
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }

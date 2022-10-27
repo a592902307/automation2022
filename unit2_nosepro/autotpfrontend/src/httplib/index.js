@@ -35,6 +35,7 @@ function login(username,password){
     )
 }
 
+// 退出请求
 function logout(){
     axios.get(
         '/api/logout/'
@@ -47,9 +48,22 @@ function logout(){
     )
 }
 
+// 获取用例数据请求
+function getCases(page_size,page_index){
+    return axios({
+      method: 'get',
+      url: 'api/cases/',
+      params: {
+        page_size,
+        page_index,
+      }
+    })
+ }
+   
+
 
 
 // export：导出  export default就相当于把导出内容设置一个default别名 其实导出的是default 好处是导入是不需要写{}、
 // 当有多个内容需要导出时，此时应该不写default，导入时需要加上{}
 // export default login
-export {login,logout}
+export {login,logout,getCases}

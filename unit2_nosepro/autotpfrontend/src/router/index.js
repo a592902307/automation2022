@@ -7,11 +7,14 @@ const routes = [
     path: '/', //一级路由
     name: 'home',
     component: HomeView,
+    meta:{
+      title:'首页'
+    },
     children:[ //子路由，这里的路由组件会显示到当前父组件的router-view中，开头不需要加/
       {
         path:'cases',
         component: ()=>import("../pages/Cases.vue"),
-        meta:{ //存放自定义标签
+        meta:{ //存放自定义数据
           title:'测试用例',
           icon:'Location'
         }

@@ -1,5 +1,12 @@
 <template>
-  <div>
-    测试计划
-  </div>
+  <MainLayout></MainLayout>
 </template>
+
+<script>
+  import MainLayout from '../components/common/MainLayout.vue';
+  export default {
+    components:{
+      MainLayout,
+    }
+  }
+</script>
