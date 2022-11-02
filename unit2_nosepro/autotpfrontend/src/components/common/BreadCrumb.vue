@@ -1,7 +1,7 @@
-<!-- eslint-disable vue/valid-v-for -->
+<!-- 面包屑组件 -->
 <template>
   <el-breadcrumb separator="/">
-    <el-breadcrumb-item v-for="route in currentRouteList" :to="{ path: route.path }">{{route.meta.title}}</el-breadcrumb-item>
+    <el-breadcrumb-item v-bind:key="index" v-for="(route,index) in currentRouteList" :to="{ path: route.path }"> {{route.meta.title}} </el-breadcrumb-item>
     <!-- <el-breadcrumb-item> <a href="/">promotion management</a> </el-breadcrumb-item> -->
     <!-- <el-breadcrumb-item>promotion list</el-breadcrumb-item>
     <el-breadcrumb-item>promotion detail</el-breadcrumb-item> -->

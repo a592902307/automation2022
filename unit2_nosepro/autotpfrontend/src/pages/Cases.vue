@@ -4,7 +4,7 @@
 
 <script>
   import MainLayout from '../components/common/MainLayout.vue';
-  import {reactive} from 'vue';
+  import {reactive,provide} from 'vue';
   export default {
     components:{
       MainLayout,
@@ -49,10 +49,14 @@
             },
         ],
       )
-      return{
-          columns,
-          tableData
-      }
+      // 改用provide、inject传输数据方式
+      // return{
+      //     columns,
+      //     tableData
+      // }
+      // 提供下层组件需要的数据，参数1：数据名称，参数2：数据内容
+      provide('columns',columns)
+      provide('tableData',tableData)
     }
   }
 </script>

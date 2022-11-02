@@ -1,9 +1,11 @@
+<!-- 主页面布局 面包屑+表格+分页 -->
 <template>
     <el-row justify="center">
         <el-col :span="24"> <BreadCrumb> </BreadCrumb></el-col>
     </el-row>
     <el-row>
         <el-col :span="24"> <Tables :columns="columns" :tableData="tableData"></Tables> </el-col>
+        <el-col> <PagInator></PagInator> </el-col>
     </el-row>
     <!-- <el-row>
         <el-col :span="12"><div class="grid-content ep-bg-purple" /></el-col>
@@ -14,11 +16,13 @@
 <script>
     import BreadCrumb from './BreadCrumb.vue';
     import Tables from './Tables.vue'; 
+    import PagInator from './PagInator.vue';
     export default {
         name:'MainLayout',
         components:{
             BreadCrumb,
-            Tables
+            Tables,
+            PagInator
         },
         props:{
             columns:Array,

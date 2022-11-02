@@ -1,4 +1,4 @@
-<!-- eslint-disable vue/valid-v-for -->
+<!-- 侧边栏子组件 -->
 <template>
     <el-menu-item v-bind:index="item.path" :key="index" v-for="(item,index) in routes">
         <!-- <el-icon>{{item.meta.icon}}</el-icon> -->

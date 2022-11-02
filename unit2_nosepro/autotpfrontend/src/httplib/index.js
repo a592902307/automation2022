@@ -48,17 +48,32 @@ function logout(){
     )
 }
 
-// 获取用例数据请求
-function getCases(page_size,page_index){
+// 获取数据的公共请求方法
+function common_get(url,page_size,page_index){
     return axios({
-      method: 'get',
-      url: 'api/cases/',
-      params: {
-        page_size,
-        page_index,
-      }
+        method:'get',
+        url:url,
+        params:{
+            page_size:page_size,
+            page_index:page_index
+        }
     })
- }
+}
+
+// 获取用例数据请求
+function getCases(page_size=5,page_index=1){
+    return common_get('/api/cases/',page_size,page_index)
+}
+// 获取web接口数据
+function getRequests(page_size=5,page_index=1){
+    return common_get('./api/requests/',page_size,page_index)
+}
+function getPlans(page_size=5,page_index=1){
+    return common_get('./api/plans/',page_size,page_index)
+}
+function getReports(page_size=5,page_index=1){
+    return common_get('./api/reports/',page_size,page_index)
+}
    
 
 
@@ -66,4 +81,4 @@ function getCases(page_size,page_index){
 // export：导出  export default就相当于把导出内容设置一个default别名 其实导出的是default 好处是导入是不需要写{}、
 // 当有多个内容需要导出时，此时应该不写default，导入时需要加上{}
 // export default login
-export {login,logout,getCases}
+export {login,logout,getCases,getRequests,getPlans,getReports}
