@@ -3,7 +3,7 @@
     <!-- total总数据条数 page_size当前显示条数 -->
     <el-pagination 
         blackground 
-        layout="prev, pager, next" 
+        layout="prev, pager, next, sizes" 
         :total="total" 
         :page-size="page_size"
         :page-sizes="[5,10,20]"
@@ -20,7 +20,7 @@
     export default{
         name:'PagInator',
         setup(){
-            const page_size=ref(10); // 当前页显示条数
+            const page_size=ref(5); // 当前页显示条数 
             const page_index=ref(1); // 当前页码
             const total=inject('total');
             const sync_data=inject('sync_data');

@@ -57,7 +57,7 @@
       }
       // 组件加载后自动更新一次数据
       onMounted(() => {
-        sync_data(10,1);
+        sync_data(5,1);
       });
       // provide为子组件、后代组件提供数据
       provide("total", total);
