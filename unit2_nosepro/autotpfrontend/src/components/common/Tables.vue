@@ -28,6 +28,7 @@
 <script>
 
 import {inject} from '@vue/runtime-core'
+import {useRoute,useRouter} from 'vue-router';
 export default {
     // 改用provide、inject传输数据方式
     // props:{
@@ -36,10 +37,13 @@ export default {
     // },
     setup() {
         const columns=inject('columns')
-        const tableData = inject('tableData')
+        const tableData=inject('tableData')
+        const router=useRouter() // 路由器，全局对象，用来切换路由等
+        const route=useRoute() // 一个跳转的路由对象，局部对象，包含请求数据，可以用来获取对应的name,path,params,query
 
         const handleEdit = (index, row) => {
             console.log(index, row)
+            router.push(`${route.path}/${row.id}`)
         }
         const handleDelete = (index, row) => {
             console.log(index, row)

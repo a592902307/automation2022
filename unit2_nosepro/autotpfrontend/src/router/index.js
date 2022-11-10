@@ -17,7 +17,16 @@ const routes = [
         meta:{ //存放自定义数据
           title:'测试用例',
           icon:'Location'
-        }
+        },
+        children:[
+          {
+            path:':chapters(\\d+)',  // 路由正则匹配：匹配数字1,2,12
+            component:()=>import('../pages/detail/CaseView.vue'),
+            meta:{
+              title:'测试用例详情页'
+            }
+          }
+        ]
       },
       {
         path:'requests',
