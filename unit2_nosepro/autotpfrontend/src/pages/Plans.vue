@@ -1,5 +1,6 @@
 <template>
-  <MainLayout :columns="columns" :tableData="tableData"></MainLayout>
+  <MainLayout :columns="columns" :tableData="tableData" v-if="$route.path==='/plans'"></MainLayout>
+  <router-view v-else></router-view>
 </template>
 
 <script>

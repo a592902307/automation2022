@@ -1,4 +1,5 @@
 <template>
+  <!-- 如果path是/cases则展示cases页面 否则展示其他页面 router-view来展示子路由出口 -->
   <MainLayout :columns="columns" :tableData="tableData" v-if="$route.path==='/cases'"></MainLayout>
   <router-view v-else></router-view>
 </template>
