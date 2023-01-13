@@ -1,0 +1,34 @@
+config:
+  name: 列出课程
+  verify: false
+  base_url: http://localhost
+
+teststeps:
+  -
+    name: login
+    # 引用测试用例，可以获取该测试用例的config-export数据，会自动导出，后续用例可以调用
+    testcase: course1/demo1_login.yaml
+
+  -
+    name: list_course
+    request:
+      url: /api/mgr/sq_mgr/
+      method: GET
+      params:
+        action: list_course
+        pagenum: 1
+        pagesize: 20
+      cookies:
+        sessionid: $cookie
+    # extract:提取响应数据--相当于导出该数据，其他步骤可以使用
+    extract:
+      retcode: body.retcode
+      total: body.total
+    # validate:结果校验
+    validate:
+      - equal:
+          - $retcode
+          - 0
+      - equal:
+          - $total
+          - 1

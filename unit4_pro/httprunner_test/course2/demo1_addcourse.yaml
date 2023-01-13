@@ -1,0 +1,45 @@
+config:
+  name: 添加课程
+  verify: false
+  base_url: ${ENV(base_url)}
+  # 参数化数据驱动，可以直接定义，也可以从debugtalk中取
+  parameters:
+    name-desc-idx: ${add_course_variables()}
+#  parameters:
+#    name-desc-idx:
+#      - ["大学语文","大学语文描述",10]
+#      - ["大学数学","大学数学描述",11]
+  export:
+    - cookie
+    - course_id
+
+teststeps:
+  -
+    name: login
+    testcase: course2/course2_login.yaml
+
+  -
+    name: addcourse
+#    variables:
+#      name: 初中数学
+#      desc: 初中数学课程
+#      idx: 2
+    request:
+      url: /api/mgr/sq_mgr/
+      method: POST
+      headers:
+        Content-Type: "application/x-www-form-urlencoded"
+      data:
+        action: add_course
+        data: '{"name":"${name}","desc":"${desc}", "display_idx":"${idx}"}'
+      cookies:
+        sessionid: $cookie
+    extract:
+      course_id: body.id
+    validate:
+      - equal:
+          - status_code
+          - 200
+      - equal:
+          - body.retcode
+          - 0

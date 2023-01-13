@@ -1,0 +1,34 @@
+config:
+  name: 更新课程
+  verify: false
+  base_url: http://localhost
+
+teststeps:
+  -
+    name: addcourse
+    testcase: course2/demo1_addcourse.yaml
+
+  -
+    name: updatecourse
+    variables:
+      name: python基础
+      desc: python基础课程
+      idx: 10
+    request:
+      url: /api/mgr/sq_mgr/
+      method: PUT
+      headers:
+        Content-Type: "application/x-www-form-urlencoded"
+      data:
+        action: modify_course
+        id: $course_id
+        newdata: '{"name":"${name}","desc":"${desc}", "display_idx":"${idx}"}'
+      cookies:
+        sessionid: $cookie
+    validate:
+      - equal:
+          - status_code
+          - 200
+      - equal:
+          - body.retcode
+          - 0

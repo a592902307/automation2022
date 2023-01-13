@@ -1,0 +1,33 @@
+config:
+  name: 登录测试用例
+  verify: false
+  base_url: http://localhost
+  # variables:配置级变量，用于整个文件
+#  variables:
+#    username: auto
+#    password: sdfsdfsdf
+  variables:
+    # 引用debugtalk的函数
+    ${login_variables()}
+# export:指定输出的测试用例变量，用于其他测试用例调用时使用
+  export:
+    - cookie
+
+teststeps:
+  -
+    name: step1_login_request
+    request:
+      url: /api/mgr/loginReq
+      method: POST
+      data:
+        username: $account
+        password: $psw
+    # extract:提取响应数据，后续测试步骤可以通过$token的形式进行引用
+    extract:
+      retcode: body.retcode
+      cookie: cookies.sessionid
+    # validate:结果校验
+    validate:
+      - equal:
+          - $retcode
+          - 0
