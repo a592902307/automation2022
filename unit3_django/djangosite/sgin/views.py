@@ -92,7 +92,7 @@ def add_event(request):
             event=Event.objects.create(name=name,address=address,limits=limits,status=status,startTime=startTime)
         except Exception as e:
             return render(request,'event_add.html',{'error':repr(e)})
-        return redirect('sgin/events/')
+        return redirect('/sgin/events/')
 
 # 创建嘉宾
 @csrf_exempt
