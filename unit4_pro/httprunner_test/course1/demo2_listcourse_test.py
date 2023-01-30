@@ -27,7 +27,7 @@ class TestCaseDemo2Listcourse(HttpRunner):
             .with_jmespath("body.total", "total")
             .validate()
             .assert_equal("$retcode", 0)
-            .assert_equal("$total", 2)
+            .assert_equal("$total", 1)
         ),
     ]
 
