@@ -6,8 +6,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from sqtp.models import Request,Case,Step
-from sqtp.serializers import RequestSerializer,CaseSerializer,StepSerializer
+from sqtp.models import Request,Case,Step,Project,Environment,User
+from sqtp.serializers import RequestSerializer,CaseSerializer,StepSerializer,ProjectSerializer,EnvironmentSerializer,UserSerializer
 
 @api_view(['GET','POST'])
 def request_list(request,format=None):
@@ -115,3 +115,27 @@ class CaseViewSet(ModelViewSet):
 class StepViewSet(ModelViewSet):
     queryset=Step.objects.all()
     serializer_class=StepSerializer
+
+class ProjectViewSet(ModelViewSet):
+    queryset=Project.objects.all()
+    serializer_class=ProjectSerializer
+
+class EnvironmentViewSet(ModelViewSet):
+    queryset=Environment.objects.all()
+    serializer_class=EnvironmentSerializer
+
+# 用户视图
+@api_view(['GET'])
+def user_list(request):
+    queryset=User.objects.all()
+    serializer=UserSerializer(queryset,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def user_detail(request,_id):
+    try:
+        req_obj=User.objects.get(pk=_id)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer=UserSerializer(req_obj)
+    return Response(serializer.data)

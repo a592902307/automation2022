@@ -12,7 +12,7 @@ from rest_framework.renderers import JSONRenderer
 class MyRenderer(JSONRenderer):
     # 重构 render方法
     def render(self, data, accepted_media_type=None, renderer_context=None):
-        # renderer_context：view,request,response,args,kwargs
+        # renderer_context：view,request,response,args,kwargs 是一个由view提供的上下文信息的字典。
         print(renderer_context['response'])
         status_code = renderer_context['response'].status_code  #响应状态码
         if str(status_code).startswith('2'): # 以2开头表示响应正常

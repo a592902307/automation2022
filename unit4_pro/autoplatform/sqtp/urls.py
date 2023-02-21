@@ -43,8 +43,11 @@ urlpatterns=[
 
     # 自动生成路由列表需要改成path('',include(router.urls))
     path('',include(router.urls)),
+    path('users/',views.user_list),
+    path('users/<int:_id>',views.user_detail),
     path('swagger/',schema_view.with_ui('swagger',cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='redoc-ui')
 ]
 # 使用基于类的视图，要重写路由
 # urlpatterns=format_suffix_patterns(urlpatterns)
+

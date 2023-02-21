@@ -144,3 +144,5 @@ REST_FRAMEWORK={
     # 异常处理模块
     'EXCEPTION_HANDLER':'utils.exception.my_exception_handler'
 }
+# 设置此模型作为用户模型
+AUTH_USER_MODEL='sqtp.User'

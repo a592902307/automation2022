@@ -8,7 +8,7 @@
 '''
 
 from rest_framework import serializers
-from sqtp.models import Step,Request,Config,Case
+from sqtp.models import Step,Request,Config,Case,Project,Environment,User
 
 # 设置序列化器：命名规范：模型名+Serializer
 class RequestSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class ConfigSerializer(serializers.ModelSerializer):
        fields='__all__'
 # 用例
 class CaseSerializer(serializers.ModelSerializer):
-   # config=ConfigSerializer(read_only=True) # config字段为Config序列化器，REST会自动提取其值
+   config=ConfigSerializer(read_only=True) # config字段为Config序列化器，REST会自动提取其值
    class Meta:
        model=Case
        fields='__all__'
@@ -39,4 +39,19 @@ class CaseSerializer(serializers.ModelSerializer):
 class StepSerializer(serializers.ModelSerializer):
     class Meta:
         model=Step
+        fields='__all__'
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Project
+        fields='__all__'
+
+class EnvironmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Environment
+        fields='__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
         fields='__all__'
