@@ -14,9 +14,14 @@ class MyRenderer(JSONRenderer):
     def render(self, data, accepted_media_type=None, renderer_context=None):
         # renderer_context：view,request,response,args,kwargs 是一个由view提供的上下文信息的字典。
         print(renderer_context['response'])
-        status_code = renderer_context['response'].status_code  #响应状态码
-        if str(status_code).startswith('2'): # 以2开头表示响应正常
-            res={'msg':'success','retcode':status_code,'retlist':data}
+        # 响应状态码，正常返回 status_code 以2开头
+        status_code=renderer_context['response'].status_code
+        if str(status_code).startswith('2'):
+            if not isinstance(data,list):
+                retlist=[data]
+            else:
+                retlist=data
+            res={'msg':'success','retcode':status_code,'retlist':retlist}
             # 返回父类方法
             return super().render(res,accepted_media_type,renderer_context)
         else:

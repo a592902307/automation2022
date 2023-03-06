@@ -1,13 +1,19 @@
+from django.contrib import auth
 from django.shortcuts import render
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from sqtp.models import Request,Case,Step,Project,Environment,User
-from sqtp.serializers import RequestSerializer,CaseSerializer,StepSerializer,ProjectSerializer,EnvironmentSerializer,UserSerializer
+from sqtp.permissions import IsOwnerOrReadOnly
+from sqtp.serializers import RequestSerializer, CaseSerializer, StepSerializer, ProjectSerializer, \
+    EnvironmentSerializer, UserSerializer, RegisterSerializer, LoginSerializer
+
 
 @api_view(['GET','POST'])
 def request_list(request,format=None):
@@ -119,13 +125,20 @@ class StepViewSet(ModelViewSet):
 class ProjectViewSet(ModelViewSet):
     queryset=Project.objects.all()
     serializer_class=ProjectSerializer
+    # 视图应用权限
+    permission_classes=(IsOwnerOrReadOnly,)
 
 class EnvironmentViewSet(ModelViewSet):
     queryset=Environment.objects.all()
     serializer_class=EnvironmentSerializer
+    # 权限，传空表明不去做权限认证
+    permission_classes=(())
 
 # 用户视图
 @api_view(['GET'])
+# 全局认证模块，及权限模块（IsAuthenticated：判断是否登录）
+@authentication_classes((BasicAuthentication,SessionAuthentication))
+@permission_classes((IsAuthenticated,))
 def user_list(request):
     queryset=User.objects.all()
     serializer=UserSerializer(queryset,many=True)
@@ -139,3 +152,41 @@ def user_detail(request,_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer=UserSerializer(req_obj)
     return Response(serializer.data)
+
+# 注册视图
+@api_view(['POST'])
+@permission_classes(())
+def register(request):
+    serializer=RegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        user=serializer.register()
+        auth.login(request,user)
+        return Response(status=status.HTTP_201_CREATED,data={"msg":"register success","is_admin":user.is_superuser,"retcode":status.HTTP_201_CREATED})
+    return Response(status=status.HTTP_400_BAD_REQUEST,data={"msg":"error","retcode":status.HTTP_400_BAD_REQUEST,"error":serializer.errors})
+# 登录视图
+@api_view(['POST'])
+@permission_classes(())
+def login(request):
+    serializer=LoginSerializer(data=request.data)
+    user=serializer.validate(request.data)
+    if user:
+        auth.login(request,user)
+        return Response(status=status.HTTP_302_FOUND,data={"msg":"login success","to":"index.html"})
+    Response(status=status.HTTP_400_BAD_REQUEST,
+             data={"msg":"error","retcode":status.HTTP_400_BAD_REQUEST,"error":serializer.errors})
+# 登录视图
+@api_view(['GET'])
+def logout(request):
+    # 当前用户是否为登录状态，是的话登出
+    if request.user.is_authenticated:
+        auth.logout(request)
+    return Response(status=status.HTTP_302_FOUND,data={"msg":"logout success","to":"login.html"})
+# 获取当前用户登录信息
+@api_view(['GET'])
+@permission_classes(())
+def current_user(request):
+    if request.user.is_authenticated:
+        serializer=UserSerializer(request.user)
+        return Response(data=serializer.data)
+    else:
+        return Response(status=403,data={"msg":"未登录","retcode":403,"to":"login.html"})

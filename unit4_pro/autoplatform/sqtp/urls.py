@@ -33,6 +33,8 @@ router=DefaultRouter()
 router.register(r'requests',views.RequestViewSet),
 router.register(r'cases',views.CaseViewSet)
 router.register(r'steps',views.StepViewSet)
+router.register(r'projects',views.ProjectViewSet)
+router.register(r'envs',views.EnvironmentViewSet)
 
 urlpatterns=[
     # 类视图的调用，需要调用as_view方法
@@ -45,6 +47,10 @@ urlpatterns=[
     path('',include(router.urls)),
     path('users/',views.user_list),
     path('users/<int:_id>',views.user_detail),
+    path('register/',views.register),
+    path('login/',views.login),
+    path('logout/',views.logout),
+    path('current_user/',views.current_user),
     path('swagger/',schema_view.with_ui('swagger',cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='redoc-ui')
 ]

@@ -14,6 +14,7 @@ from .base import CommonInfo
 # 测试平台核心模型----拆解HR用例部分
 
 class Config(CommonInfo):
+    project=models.ForeignKey(Project,on_delete=models.DO_NOTHING,null=True)
     name=models.CharField(verbose_name="用例名称",max_length=128,unique=True)
     base_url=models.CharField(verbose_name="IP",max_length=512,blank=True,null=True)
     variables=models.JSONField(verbose_name="用例变量",null=True)

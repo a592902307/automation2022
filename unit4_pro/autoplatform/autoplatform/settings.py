@@ -142,7 +142,16 @@ REST_FRAMEWORK={
         'utils.renderers.MyRenderer',
     ),
     # 异常处理模块
-    'EXCEPTION_HANDLER':'utils.exception.my_exception_handler'
+    'EXCEPTION_HANDLER':'utils.exception.my_exception_handler',
+    # 全局认证模块--生效要和权限模块一起配置
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    # 全局权限模块
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 # 设置此模型作为用户模型
 AUTH_USER_MODEL='sqtp.User'
