@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -117,6 +117,19 @@ class RequestViewSet(ModelViewSet):
 class CaseViewSet(ModelViewSet):
     queryset=Case.objects.all()
     serializer_class=CaseSerializer
+    # 创建及更新用户
+    def perform_create(self, serializer):
+        serializer.save(create_by=self.request.user)
+    def perform_update(self, serializer):
+        serializer.save(updated_by=self.request.user)
+
+    @action(methods=['GET'],detail=True,url_path='run',url_name='run_case')
+    # 完整的url等于/cases/<int:case_id>/run
+    def run_case(self,request,pk):
+        case=Case.objects.create(pk=pk)
+        serializer=self.get_serializer(instance=case)
+        serializer.to_json_file()
+        return Response(data={'msg':'success','retcode':200})
 
 class StepViewSet(ModelViewSet):
     queryset=Step.objects.all()

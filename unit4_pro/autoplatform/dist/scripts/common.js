@@ -216,7 +216,6 @@ function multiple_select_attach(path, target_select, targets, params) {
             }
           });
         }
-
       }
     },
     error: function () {
@@ -258,7 +257,6 @@ function multiple_checked_box(path, target_select, targets, params) {
             }
           });
         }
-
       }
     },
     error: function () {
@@ -366,8 +364,8 @@ function responseHandler(res) {
 //表格超出宽度鼠标悬停显示td内容
 function paramsMatter(value, row, index) {
   let span = document.createElement("span");
-  span.setAttribute("title", value);
-  span.innerHTML = value;
+  span.setAttribute("title", JSON.stringify(value));
+  span.innerHTML = JSON.stringify(value);
   return span.outerHTML;
 }
 
@@ -452,9 +450,6 @@ function collect_data(field, value, row, $element) {
 }
 
 function saveData(index, field, value) {
-  console.log(index)
-  console.log(field)
-  console.log(value)
   $('#detail_view').bootstrapTable('updateCell', {
     index: index,       //行索引
     field: field,       //列名

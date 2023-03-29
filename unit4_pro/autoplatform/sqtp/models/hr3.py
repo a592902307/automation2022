@@ -15,7 +15,7 @@ from .base import CommonInfo
 
 class Config(CommonInfo):
     project=models.ForeignKey(Project,on_delete=models.DO_NOTHING,null=True)
-    name=models.CharField(verbose_name="用例名称",max_length=128,unique=True)
+    name=models.CharField(verbose_name="用例名称",max_length=128)
     base_url=models.CharField(verbose_name="IP",max_length=512,blank=True,null=True)
     variables=models.JSONField(verbose_name="用例变量",null=True)
     parameters=models.JSONField(verbose_name="全局参数",null=True)
@@ -47,9 +47,12 @@ class Step(CommonInfo):
     validate=models.JSONField(verbose_name="结果校验",null=True)
     setup_hooks=models.JSONField(verbose_name="初始化",null=True)
     teardown_hooks=models.JSONField(verbose_name="清除",null=True)
+    sorted_no=models.PositiveSmallIntegerField(verbose_name="步骤顺序",default=1)
 
     class Meta:
-        ordering=['id']
+        ordering=['id','sorted_no']
+        # 同一个用例的步骤顺序应该是不一样的
+        unique_together=['belong_case','sorted_no']
 
 class Request(CommonInfo):
     method_choices=( # method可选的字段，
@@ -58,7 +61,7 @@ class Request(CommonInfo):
         (2,'PUT'),
         (3,'DELETE'),
     )
-    step=models.OneToOneField(Step,on_delete=models.CASCADE,null=True)
+    step=models.OneToOneField(Step,on_delete=models.CASCADE,null=True,related_name='request')
     method=models.SmallIntegerField(verbose_name="请求方法",choices=method_choices,default=0)
     url=models.CharField(verbose_name="请求路径",default='/',max_length=1000)
     params=models.JSONField(verbose_name="url参数",null=True)

@@ -33,9 +33,9 @@ function paint_case_view(result) {
   // 更新Config部分
   $('input[name="name"]').val(config.name);
   $('input[name="base_url"]').val(config.base_url);
-  $('input[name="variables"]').val(config.variables);
-  $('input[name="parameters"]').val(config.parameters);
-  $('input[name="export"]').val(config.export);
+  $('textarea[name="variables"]').val(JSON.stringify(config.variables));
+  $('textarea[name="parameters"]').val(JSON.stringify(config.parameters));
+  $('textarea[name="export"]').val(JSON.stringify(config.export));
   $('.c-switch-input[name="verify"]').prop('checked', config.verify);
 }
 
@@ -102,11 +102,12 @@ function new_line_step() {
   $('.card-footer>.btn-warning').bind('click', function () {
     let tr = $('.card-footer tbody tr:nth-last-child(1)')[0].outerHTML;
     let num = $(tr).children('td:nth-child(1)').text();
-    num = parseInt(num) + 1  //序号自增
+    num = isNaN(num)?1:parseInt(num) + 1 //判断是否为数字
+    let belong_case_id = getUrlParam('case_id')
     let default_values = {
-      "name": "step_name", "variables": {}, "request": {},
-      "extract": {}, "validate": {}, "setup_hooks": [], "teardown_hooks": [],
-      "sorted_no":num
+      "name": "step_name", "variables": {}, "request": {"method":"GET","url":"/demo/path"},
+      "extract": {}, "validate": [], "setup_hooks": [], "teardown_hooks": [],
+      "sorted_no":num,"belong_case_id":belong_case_id
     }
     $('#detail_view').bootstrapTable('append', default_values);
   })

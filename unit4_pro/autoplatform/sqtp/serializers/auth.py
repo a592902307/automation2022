@@ -15,7 +15,7 @@ from sqtp.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields='__all__'
+        fields=['date_joined','email','is_active','id_superuser','phone','realname','username','user_type']
 
 # 注册序列器
 class RegisterSerializer(serializers.ModelSerializer):

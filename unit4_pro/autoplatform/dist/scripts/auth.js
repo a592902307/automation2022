@@ -36,7 +36,7 @@ function register(){
             window.location.href = 'index.html'
         },
         error: function (result){
-            error_msg = String(result.responseJSON.error)
+            error_msg = JSON.stringify(result.responseJSON.error)
             return handler_alert('#error_tips',error_msg);
         },
     })
