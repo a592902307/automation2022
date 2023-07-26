@@ -2,7 +2,11 @@ from django.db.models import Value
 from django.test import TestCase
 
 # Create your tests here.
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 from sqtp.models import Config,Case,Step,Request
+from sqtp.serializers import RequestSerializer
+import io
 
 class TestRelatedQuery(TestCase):
     def setUp(self) -> None:
@@ -62,3 +66,23 @@ class TestJsonField(TestCase):
         res=Request.objects.filter(data__address__in=["shanghai","hangzhou"])
         print('======json条件查询=====')
         print(res)
+
+class TestRequestSerializer(TestCase):
+    req1=Request.objects.create(url='/demo1',data={'name':'小明','age':18,'addr':'nanjing'})
+    req2=Request.objects.create(url='/demo1',params={'name':'小明','age':18,'addr':'nanjing'})
+    # 序列化
+    req_ser=RequestSerializer(req1)
+    print(req_ser.data)
+    content=JSONRenderer().render(req_ser.data)
+    print(content)
+
+    # 反序列化：steam流转化成python原生数据类型
+    stream=io.BytesIO(content)
+    data=JSONParser().parse(stream)
+    # python原生数据类型转化成django对象实例
+    ser=RequestSerializer(data=data)
+    print(ser.is_valid()) # 校验数据合法
+    print(ser.validated_data) # 查看数据对象
+    ser.save()
+
+    print(repr(ser))

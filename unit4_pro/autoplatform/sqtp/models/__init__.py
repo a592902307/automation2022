@@ -10,3 +10,4 @@
 from .hr3 import Config,Case,Step,Request
 from .mgr import Project,Environment
 from .auth import User
+from .task import Plan,Report

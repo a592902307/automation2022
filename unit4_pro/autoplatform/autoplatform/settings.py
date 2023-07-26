@@ -151,7 +151,10 @@ REST_FRAMEWORK={
     # 全局权限模块
     'DEFAULT_PERMISSION_CLASSES':(
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+    # 自定义-全局分页模块
+    'DEFAULT_PAGINATION_CLASS':'sqtp.pagination.MyPageNumberPagination',
+    'PAGE_SIZE':10,
 }
 # 设置此模型作为用户模型
 AUTH_USER_MODEL='sqtp.User'

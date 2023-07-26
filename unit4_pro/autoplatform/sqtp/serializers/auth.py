@@ -15,10 +15,11 @@ from sqtp.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['date_joined','email','is_active','id_superuser','phone','realname','username','user_type']
+        fields=['id','date_joined','email','is_active','is_superuser','phone','realname','username','user_type']
 
 # 注册序列器
 class RegisterSerializer(serializers.ModelSerializer):
+    # admin_code不在User字段中，需要新创建定义
     admin_code=serializers.CharField(default="sqtp")
     class Meta:
         model=User

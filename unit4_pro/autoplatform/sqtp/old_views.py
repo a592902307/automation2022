@@ -1,8 +1,8 @@
+# Create your views here.
 from django.contrib import auth
 from django.shortcuts import render
-
-# Create your views here.
 from django.views.decorators.csrf import csrf_exempt
+from httprunner.cli import main_run
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, action
@@ -126,10 +126,15 @@ class CaseViewSet(ModelViewSet):
     @action(methods=['GET'],detail=True,url_path='run',url_name='run_case')
     # 完整的url等于/cases/<int:case_id>/run
     def run_case(self,request,pk):
-        case=Case.objects.create(pk=pk)
+        case=Case.objects.get(pk=pk)
         serializer=self.get_serializer(instance=case)
-        serializer.to_json_file()
-        return Response(data={'msg':'success','retcode':200})
+        # 生成用例文件
+        path=serializer.to_json_file()
+        # hr3运行测试用例
+        exit_code=main_run([path])
+        if exit_code!=0:
+            return Response(data={'error':'failed run case','retcode':exit_code},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(data={'msg':' run success','retcode':status.HTTP_200_OK})
 
 class StepViewSet(ModelViewSet):
     queryset=Step.objects.all()
@@ -187,7 +192,7 @@ def login(request):
         return Response(status=status.HTTP_302_FOUND,data={"msg":"login success","to":"index.html"})
     Response(status=status.HTTP_400_BAD_REQUEST,
              data={"msg":"error","retcode":status.HTTP_400_BAD_REQUEST,"error":serializer.errors})
-# 登录视图
+# 登出视图
 @api_view(['GET'])
 def logout(request):
     # 当前用户是否为登录状态，是的话登出

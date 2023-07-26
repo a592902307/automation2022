@@ -35,9 +35,10 @@ class TestRequestSerializer(TestCase):
         print(serializer.validated_data)  # 校验之后的数据会放在validated_data中
         serializer.save()
 
-    # 序列化器查看结果集
+    # 序列化器查看结果集，many=True用来序列化查询结果集，不加的话返回的是序列化模型实例
     serializer=RequestSerializer(Request.objects.all(),many=True)
     print(serializer.data)
 
     # 序列化内部源码
+    print("--------------------------------------------------------")
     print(repr(serializer))

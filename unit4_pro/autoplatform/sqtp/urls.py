@@ -35,15 +35,17 @@ router.register(r'cases',views.CaseViewSet)
 router.register(r'steps',views.StepViewSet)
 router.register(r'projects',views.ProjectViewSet)
 router.register(r'envs',views.EnvironmentViewSet)
+router.register(r'plans',views.PlanViewSet)
+router.register(r'reports',views.ReportViewSet)
 
 urlpatterns=[
     # 类视图的调用，需要调用as_view方法
     # path('requests/',views.RequestList.as_view()),
     # path('requests/<int:_id>',views.RequestDetail.as_view())
-    # 使用python定义好的视图，需要使用它本身自带的参数，所以要改成pk
+    # 使用python定义好的通用类视图，需要使用它本身自带的参数，所以要改成pk
     # path('requests/<int:pk>',views.RequestDetail.as_view())
 
-    # 自动生成路由列表需要改成path('',include(router.urls))
+    # 视图集ViewSet自动生成路由列表需要改成path('',include(router.urls))
     path('',include(router.urls)),
     path('users/',views.user_list),
     path('users/<int:_id>',views.user_detail),
@@ -51,6 +53,7 @@ urlpatterns=[
     path('login/',views.login),
     path('logout/',views.logout),
     path('current_user/',views.current_user),
+    path('upload/<str:filename>/',views.FileUploadView.as_view()),
     path('swagger/',schema_view.with_ui('swagger',cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='redoc-ui')
 ]

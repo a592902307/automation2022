@@ -10,3 +10,4 @@
 from .auth import UserSerializer,RegisterSerializer,LoginSerializer
 from .hr3 import CaseSerializer,RequestSerializer,ConfigSerializer,StepSerializer
 from .mgr import ProjectSerializer,EnvironmentSerializer
+from .task import PlanSerializer,ReportSerializer

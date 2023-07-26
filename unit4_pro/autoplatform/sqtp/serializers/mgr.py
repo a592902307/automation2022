@@ -24,6 +24,23 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields=['id','admin_id','admin','name','status','version','desc','create_time','update_time']
 
 class EnvironmentSerializer(serializers.ModelSerializer):
+    project_id=serializers.IntegerField(write_only=True)
+    project=ProjectSerializer(read_only=True)
+    category=serializers.SerializerMethodField()
+    os=serializers.SerializerMethodField()
+    status=serializers.SerializerMethodField()
+
+    def get_status(self,obj):
+        return obj.get_status_display()
+    def get_os(self,obj):
+        return obj.get_os_display()
+    def get_category(self,obj):
+        return obj.get_category_display()
+    def validate_project_id(self, project_id):
+        if not Project.objects.filter(pk=project_id).count():
+            raise serializers.ValidationError('请传递正确的project_id')
+        return project_id
+
     class Meta:
         model=Environment
         fields='__all__'
