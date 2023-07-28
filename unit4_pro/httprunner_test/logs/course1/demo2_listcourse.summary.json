@@ -1,0 +1,234 @@
+{
+    "success": true,
+    "stat": {
+        "testcases": {
+            "total": 1,
+            "success": 1,
+            "fail": 0
+        },
+        "teststeps": {
+            "total": 2,
+            "failures": 0,
+            "successes": 2
+        }
+    },
+    "time": {
+        "start_at": 1687274041.6720326,
+        "duration": 4.381282329559326
+    },
+    "platform": {
+        "httprunner_version": "v4.3.0",
+        "python_version": "CPython 3.10.6",
+        "platform": "Windows-10-10.0.22000-SP0"
+    },
+    "details": [
+        {
+            "name": "添加课程",
+            "success": true,
+            "case_id": "ef373882-4bfa-4415-bbe0-9d2f70ce8bfd",
+            "time": {
+                "start_at": 1687274041.6760223,
+                "start_at_iso_format": "2023-06-20T15:14:01.676022",
+                "duration": 4.37526273727417
+            },
+            "in_out": {
+                "config_vars": {
+                    "name": "大学语文",
+                    "desc": "大学语文描述",
+                    "idx": 10
+                },
+                "export_vars": {
+                    "cookie": "6dlzgq4yhz7or429spcgnmdbanjf05ki",
+                    "course_id": 1489
+                }
+            },
+            "log": "D:\\py-item\\automation2022\\unit4_pro\\httprunner_test\\logs\\ef373882-4bfa-4415-bbe0-9d2f70ce8bfd.run.log",
+            "records": [
+                {
+                    "name": "login",
+                    "step_type": "testcase",
+                    "success": true,
+                    "data": [
+                        {
+                            "name": "login",
+                            "step_type": "request",
+                            "success": true,
+                            "data": {
+                                "success": true,
+                                "req_resps": [
+                                    {
+                                        "request": {
+                                            "method": "POST",
+                                            "url": "http://localhost/api/mgr/loginReq",
+                                            "headers": {
+                                                "User-Agent": "python-requests/2.28.1",
+                                                "Accept-Encoding": "gzip, deflate, br",
+                                                "Accept": "*/*",
+                                                "Connection": "keep-alive",
+                                                "HRUN-Request-ID": "HRUN-ef373882-4bfa-4415-bbe0-9d2f70ce8bfd-041681",
+                                                "Content-Length": "32",
+                                                "Content-Type": "application/x-www-form-urlencoded"
+                                            },
+                                            "cookies": {},
+                                            "body": "username=auto&password=sdfsdfsdf"
+                                        },
+                                        "response": {
+                                            "status_code": 200,
+                                            "headers": {
+                                                "Content-Type": "application/json",
+                                                "X-Frame-Options": "DENY",
+                                                "Content-Length": "14",
+                                                "Vary": "Cookie",
+                                                "X-Content-Type-Options": "nosniff",
+                                                "Referrer-Policy": "same-origin",
+                                                "Cross-Origin-Opener-Policy": "same-origin",
+                                                "Set-Cookie": "sessionid=6dlzgq4yhz7or429spcgnmdbanjf05ki; HttpOnly; Path=/; SameSite=Lax",
+                                                "Date": "Tue, 20 Jun 2023 15:14:03 GMT",
+                                                "Server": "0.0.0.0"
+                                            },
+                                            "cookies": {
+                                                "sessionid": "6dlzgq4yhz7or429spcgnmdbanjf05ki"
+                                            },
+                                            "encoding": "utf-8",
+                                            "content_type": "application/json",
+                                            "body": {
+                                                "retcode": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "stat": {
+                                    "content_size": 0,
+                                    "response_time_ms": 2265.87,
+                                    "elapsed_ms": 263.971
+                                },
+                                "address": {
+                                    "client_ip": "127.0.0.1",
+                                    "client_port": 11628,
+                                    "server_ip": "127.0.0.1",
+                                    "server_port": 80
+                                },
+                                "validators": {
+                                    "validate_extractor": [
+                                        {
+                                            "comparator": "equal",
+                                            "check": 0,
+                                            "check_value": 0,
+                                            "expect": "$code",
+                                            "expect_value": 0,
+                                            "message": "",
+                                            "check_result": "pass"
+                                        }
+                                    ]
+                                }
+                            },
+                            "elapsed": 2.270854949951172,
+                            "content_size": 0,
+                            "export_vars": {
+                                "retcode": 0,
+                                "cookie": "6dlzgq4yhz7or429spcgnmdbanjf05ki"
+                            },
+                            "attachment": ""
+                        }
+                    ],
+                    "elapsed": 0.0,
+                    "content_size": 0,
+                    "export_vars": {
+                        "cookie": "6dlzgq4yhz7or429spcgnmdbanjf05ki"
+                    },
+                    "attachment": ""
+                },
+                {
+                    "name": "addcourse",
+                    "step_type": "request",
+                    "success": true,
+                    "data": {
+                        "success": true,
+                        "req_resps": [
+                            {
+                                "request": {
+                                    "method": "POST",
+                                    "url": "http://localhost/api/mgr/sq_mgr/",
+                                    "headers": {
+                                        "User-Agent": "python-requests/2.28.1",
+                                        "Accept-Encoding": "gzip, deflate, br",
+                                        "Accept": "*/*",
+                                        "Connection": "keep-alive",
+                                        "Content-Type": "application/x-www-form-urlencoded",
+                                        "HRUN-Request-ID": "HRUN-ef373882-4bfa-4415-bbe0-9d2f70ce8bfd-043957",
+                                        "Cookie": "sessionid=6dlzgq4yhz7or429spcgnmdbanjf05ki; sessionid=6dlzgq4yhz7or429spcgnmdbanjf05ki",
+                                        "Content-Length": "192"
+                                    },
+                                    "cookies": {
+                                        "sessionid": "6dlzgq4yhz7or429spcgnmdbanjf05ki"
+                                    },
+                                    "body": "action=add_course&data=%7B%22name%22%3A%22%E5%A4%A7%E5%AD%A6%E8%AF%AD%E6%96%87%22%2C%22desc%22%3A%22%E5%A4%A7%E5%AD%A6%E8%AF%AD%E6%96%87%E6%8F%8F%E8%BF%B0%22%2C+%22display_idx%22%3A%2210%22%7D"
+                                },
+                                "response": {
+                                    "status_code": 200,
+                                    "headers": {
+                                        "Content-Type": "application/json",
+                                        "X-Frame-Options": "DENY",
+                                        "Content-Length": "26",
+                                        "Vary": "Cookie",
+                                        "X-Content-Type-Options": "nosniff",
+                                        "Referrer-Policy": "same-origin",
+                                        "Cross-Origin-Opener-Policy": "same-origin",
+                                        "Date": "Tue, 20 Jun 2023 15:14:03 GMT",
+                                        "Server": "0.0.0.0"
+                                    },
+                                    "cookies": {},
+                                    "encoding": "utf-8",
+                                    "content_type": "application/json",
+                                    "body": {
+                                        "retcode": 0,
+                                        "id": 1489
+                                    }
+                                }
+                            }
+                        ],
+                        "stat": {
+                            "content_size": 0,
+                            "response_time_ms": 9.0,
+                            "elapsed_ms": 7.894
+                        },
+                        "address": {
+                            "client_ip": "127.0.0.1",
+                            "client_port": 11628,
+                            "server_ip": "127.0.0.1",
+                            "server_port": 80
+                        },
+                        "validators": {
+                            "validate_extractor": [
+                                {
+                                    "comparator": "equal",
+                                    "check": "status_code",
+                                    "check_value": 200,
+                                    "expect": 200,
+                                    "expect_value": 200,
+                                    "message": "",
+                                    "check_result": "pass"
+                                },
+                                {
+                                    "comparator": "equal",
+                                    "check": "body.retcode",
+                                    "check_value": 0,
+                                    "expect": 0,
+                                    "expect_value": 0,
+                                    "message": "",
+                                    "check_result": "pass"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed": 2.0919270515441895,
+                    "content_size": 0,
+                    "export_vars": {
+                        "course_id": 1489
+                    },
+                    "attachment": ""
+                }
+            ]
+        }
+    ]
+}
