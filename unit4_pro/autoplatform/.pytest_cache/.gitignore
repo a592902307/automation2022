@@ -3,6 +3,3 @@
 .idea
 __pycache__
 *.pyc
-logs
-reports
-dist
